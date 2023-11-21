@@ -15,7 +15,6 @@
     ?>
 
     <!-- Utiliser JavaScript pour envoyer la variable à Python -->
-    <title>Changement de variable</title>
     <script>
         var messageFromPHP = "<?php echo $message_from_php; ?>";
         // Déclaration de la variable
@@ -38,6 +37,7 @@
             maVariable = nouvelleValeur;
             // Mise à jour du texte dans la balise avec l'id "affichageVariable"
             document.getElementById("affichageVariable").innerText = "Ma variable : " + maVariable;
+            console.log("Variable changée à : " + maVariable);
         }
     </script>
 
