@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <title>Page d'accueil</title>
+  <title>Ma Page</title>
 </head>
 <body>
-  <h1>Page d'accueil</h1>
-  <a href="page2.html">Aller à la page 2</a>
+  <h1>Ma Page</h1>
+  <p>Ma variable actuelle : {{ ma_variable }}</p>
+  <a href="{{ url_for('changer_variable') }}">Changer la variable</a>
 </body>
 </html>
