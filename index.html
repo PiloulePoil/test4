@@ -1,13 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Communication PHP-Python</title>
+</head>
+<body>
+
+    <h1>Communication PHP-Python</h1>
+
+    <?php
+        // Définir une variable PHP
+        $message_from_php = "Bonjour depuis PHP!";
+    ?>
+
+    <!-- Utiliser JavaScript pour envoyer la variable à Python -->
     <title>Changement de variable</title>
     <script>
+        var messageFromPHP = "<?php echo $message_from_php; ?>";
         // Déclaration de la variable
         var maVariable = 0;
 
+        // Utiliser XMLHttpRequest pour envoyer la variable à un script Python
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "python_script.py", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.send("message=" + messageFromPHP);
+
+        // Afficher la réponse de Python
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log("Réponse de Python : " + xhr.responseText);
+            }
+        };
         // Fonction pour changer la variable
         function changerVariable(nouvelleValeur) {
             maVariable = nouvelleValeur;
