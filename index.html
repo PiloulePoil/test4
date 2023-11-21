@@ -1,53 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ma Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Example</title>
 </head>
 <body>
-  <h1>Ma Page</h1>
-  <p>Ma variable actuelle : <span id="variable">variable</span></p>
-  <p>Valeur de la variable affichée à l'extérieur du script : <span id="externalVariable"></span></p>
-  <button onclick="incrementerVariable()">Incrémenter la variable</button>
-  <button onclick="reinitialiserVariable()">Réinitialiser la variable</button>
+    <div id="output"></div>
+    <script>
+        const outputDiv = document.getElementById('output');
+        const socket = new WebSocket('ws://192.168.1.100:8765');
 
-  <script>
-    // Nouvelle variable pour stocker la valeur en tant qu'entier
-    var maVariableEntiere = 0;
+        // Connection opened
+        socket.addEventListener('open', (event) => {
+            outputDiv.innerHTML += '<p>Connexion établie.</p>';
+            sendMessage();
+        });
 
-    // Fonction pour incrémenter la variable
-    function incrementerVariable() {
-      var variableElement = document.getElementById('variable');
-      maVariableEntiere = parseInt(variableElement.innerText) + 1;
-      variableElement.innerText = maVariableEntiere;
+        // Listen for messages
+        socket.addEventListener('message', (event) => {
+            outputDiv.innerHTML += `<p>Message du serveur : ${event.data}</p>`;
+            closeConnection();
+        });
 
-      // Mettre à jour la valeur à l'extérieur du script
-      var externalVariableElement = document.getElementById('externalVariable');
-      externalVariableElement.innerText = maVariableEntiere;
-    }
+        // Connection closed
+        socket.addEventListener('close', (event) => {
+            outputDiv.innerHTML += '<p>Connexion fermée.</p>';
+        });
 
-    // Fonction pour réinitialiser la variable
-    function reinitialiserVariable() {
-      var variableElement = document.getElementById('variable');
-      maVariableEntiere = 0;
-      variableElement.innerText = maVariableEntiere;
+        function sendMessage() {
+            const message = 'Hello Server!';
+            outputDiv.innerHTML += `<p>Envoi du message : ${message}</p>`;
+            socket.send(message);
+        }
 
-      // Mettre à jour la valeur à l'extérieur du script
-      var externalVariableElement = document.getElementById('externalVariable');
-      externalVariableElement.innerText = maVariableEntiere;
-    }
-
-    // Définir la variable à 15 lors du chargement de la page
-    window.onload = function() {
-      var variableElement = document.getElementById('variable');
-      maVariableEntiere = 15;
-      variableElement.innerText = maVariableEntiere;
-
-      // Mettre à jour la valeur à l'extérieur du script
-      var externalVariableElement = document.getElementById('externalVariable');
-      externalVariableElement.innerText = maVariableEntiere;
-    }
-  </script>
+        function closeConnection() {
+            outputDiv.innerHTML += '<p>Fermeture de la connexion.</p>';
+            socket.close();
+        }
+    </script>
 </body>
 </html>
