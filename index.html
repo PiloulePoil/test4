@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Communication HTML-JavaScript</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Communication PHP-Python</title>
 </head>
 <body>
 
-  <label for="myInput">Modifier la variable :</label>
-  <input type="text" id="myInput" name="myInput" value="Initial Value">
-  <button type="button" onclick="updateVariable()">Modifier</button>
+    <h1>Communication PHP-Python</h1>
 
-  <script>
-    function updateVariable() {
-      var inputValue = document.getElementById('myInput').value;
+    <?php
+        // Définir une variable PHP
+        $message_from_php = "Bonjour depuis PHP!";
+    ?>
 
-      // Stocker la valeur dans le stockage local (local storage)
-      localStorage.setItem('myVariable', inputValue);
+    <!-- Utiliser JavaScript pour envoyer la variable à Python -->
+    <script>
+        var messageFromPHP = "<?php echo $message_from_php; ?>";
 
-      // Vous pouvez également envoyer la valeur à un serveur ici si nécessaire
-      // Par exemple, en utilisant une requête HTTP POST vers un serveur distant
-    }
+        // Utiliser XMLHttpRequest pour envoyer la variable à un script Python
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "python_script.py", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.send("message=" + messageFromPHP);
 
-    // Vous pouvez récupérer la valeur à partir du stockage local lors du chargement de la page
-    document.addEventListener('DOMContentLoaded', function() {
-      var storedValue = localStorage.getItem('myVariable');
-      if (storedValue !== null) {
-        document.getElementById('myInput').value = storedValue;
-      }
-    });
-  </script>
+        // Afficher la réponse de Python
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log("Réponse de Python : " + xhr.responseText);
+            }
+        };
+    </script>
 
 </body>
 </html>
