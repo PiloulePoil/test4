@@ -12,17 +12,21 @@
   <button onclick="reinitialiserVariable()">Réinitialiser la variable</button>
 
   <script>
+    // Nouvelle variable pour stocker la valeur en tant qu'entier
+    var maVariableEntiere = 0;
+
     // Fonction pour incrémenter la variable
     function incrementerVariable() {
       var variableElement = document.getElementById('variable');
-      var nouvelleValeur = parseInt(variableElement.innerText) + 1;
-      variableElement.innerText = nouvelleValeur;
+      maVariableEntiere = parseInt(variableElement.innerText) + 1;
+      variableElement.innerText = maVariableEntiere;
     }
 
     // Fonction pour réinitialiser la variable
     function reinitialiserVariable() {
       var variableElement = document.getElementById('variable');
-      variableElement.innerText = 0;
+      maVariableEntiere = 0;
+      variableElement.innerText = maVariableEntiere;
     }
   </script>
 </body>
