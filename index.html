@@ -8,6 +8,8 @@
 <body>
   <h1>Ma Page</h1>
   <p>Ma variable actuelle : {{ ma_variable }}</p>
-  <a href="{{ url_for('changer_variable') }}">Changer la variable</a>
+  <a href="{{ url_for('incrementer_variable') }}">Incrémenter la variable</a>
+  <br>
+  <a href="{{ url_for('reinitialiser_variable') }}">Réinitialiser la variable</a>
 </body>
 </html>
