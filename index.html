@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +23,7 @@
 
         // Utiliser XMLHttpRequest pour envoyer la variable à un script Python
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "python_script.py", true);
+        xhr.open("POST", "http://127.0.0.1:5000/", true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.send("message=" + messageFromPHP);
 
@@ -38,8 +40,7 @@
             document.getElementById("affichageVariable").innerText = "Ma variable : " + maVariable;
         }
     </script>
-</head>
-<body>
+
     <h1>Test changement de variable</h1>
 
     <!-- Boutons pour changer la variable -->
@@ -49,5 +50,6 @@
 
     <!-- Affichage de la variable -->
     <p id="affichageVariable">Ma variable : 0</p>
+
 </body>
 </html>
