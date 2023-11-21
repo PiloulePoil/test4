@@ -28,6 +28,13 @@
       maVariableEntiere = 0;
       variableElement.innerText = maVariableEntiere;
     }
+
+    // Définir la variable à 15 lors du chargement de la page
+    window.onload = function() {
+      var variableElement = document.getElementById('variable');
+      maVariableEntiere = 15;
+      variableElement.innerText = maVariableEntiere;
+    }
   </script>
 </body>
 </html>
