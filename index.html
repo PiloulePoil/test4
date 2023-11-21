@@ -3,34 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Communication PHP-Python</title>
+    <title>Changement de variable</title>
+    <script>
+        // Déclaration de la variable
+        var maVariable = 0;
+
+        // Fonction pour changer la variable
+        function changerVariable(nouvelleValeur) {
+            maVariable = nouvelleValeur;
+            // Mise à jour du texte dans la balise avec l'id "affichageVariable"
+            document.getElementById("affichageVariable").innerText = "Ma variable : " + maVariable;
+        }
+    </script>
 </head>
 <body>
+    <h1>Test changement de variable</h1>
 
-    <h1>Communication PHP-Python</h1>
+    <!-- Boutons pour changer la variable -->
+    <button onclick="changerVariable(1)">Changer à 1</button>
+    <button onclick="changerVariable(2)">Changer à 2</button>
+    <button onclick="changerVariable(3)">Changer à 3</button>
 
-    <?php
-        // Définir une variable PHP
-        $message_from_php = "Bonjour depuis PHP!";
-    ?>
-
-    <!-- Utiliser JavaScript pour envoyer la variable à Python -->
-    <script>
-        var messageFromPHP = "<?php echo $message_from_php; ?>";
-
-        // Utiliser XMLHttpRequest pour envoyer la variable à un script Python
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "python_script.py", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.send("message=" + messageFromPHP);
-
-        // Afficher la réponse de Python
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                console.log("Réponse de Python : " + xhr.responseText);
-            }
-        };
-    </script>
-
+    <!-- Affichage de la variable -->
+    <p id="affichageVariable">Ma variable : 0</p>
 </body>
 </html>
