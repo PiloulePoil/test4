@@ -7,9 +7,23 @@
 </head>
 <body>
   <h1>Ma Page</h1>
-  <p>Ma variable actuelle : {{ ma_variable }}</p>
-  <a href="{{ url_for('incrementer_variable') }}">Incrémenter la variable</a>
-  <br>
-  <a href="{{ url_for('reinitialiser_variable') }}">Réinitialiser la variable</a>
+  <p>Ma variable actuelle : <span id="variable">{{ ma_variable }}</span></p>
+  <button onclick="incrementerVariable()">Incrémenter la variable</button>
+  <button onclick="reinitialiserVariable()">Réinitialiser la variable</button>
+
+  <script>
+    // Fonction pour incrémenter la variable
+    function incrementerVariable() {
+      var variableElement = document.getElementById('variable');
+      var nouvelleValeur = parseInt(variableElement.innerText) + 1;
+      variableElement.innerText = nouvelleValeur;
+    }
+
+    // Fonction pour réinitialiser la variable
+    function reinitialiserVariable() {
+      var variableElement = document.getElementById('variable');
+      variableElement.innerText = 0;
+    }
+  </script>
 </body>
 </html>
