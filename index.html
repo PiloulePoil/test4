@@ -3,53 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Communication PHP-Python</title>
+    <title>Communication avec Raspberry Pi</title>
 </head>
 <body>
-
-    <h1>Communication PHP-Python</h1>
-
-    <?php
-        // Définir une variable PHP
-        $message_from_php = "Bonjour depuis PHP!";
-    ?>
-
-    <!-- Utiliser JavaScript pour envoyer la variable à Python -->
+    <h1>Communication avec Raspberry Pi</h1>
+    <script src="https://cdn.jsdelivr.net/npm/node-ipc@9.1.1"></script>
     <script>
-        var messageFromPHP = "<?php echo $message_from_php; ?>";
-        // Déclaration de la variable
-        var maVariable = 0;
+        const ipc = require('node-ipc');
 
-        // Utiliser XMLHttpRequest pour envoyer la variable à un script Python
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://127.0.0.1:5000/", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.send("message=" + messageFromPHP);
+        ipc.config.id = 'site-web';
+        ipc.config.retry = 1500;
 
-        // Afficher la réponse de Python
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                console.log("Réponse de Python : " + xhr.responseText);
-            }
-        };
-        // Fonction pour changer la variable
-        function changerVariable(nouvelleValeur) {
-            maVariable = nouvelleValeur;
-            // Mise à jour du texte dans la balise avec l'id "affichageVariable"
-            document.getElementById("affichageVariable").innerText = "Ma variable : " + maVariable;
-            console.log("Variable changée à : " + maVariable);
-        }
+        ipc.connectTo('raspberry-pi', () => {
+            ipc.of['raspberry-pi'].on('connect', () => {
+                console.log('Connecté à la Raspberry Pi');
+            });
+
+            ipc.of['raspberry-pi'].on('disconnect', () => {
+                console.log('Déconnecté de la Raspberry Pi');
+            });
+
+            // Modifier cette variable en fonction de votre besoin
+            const nouvelleValeur = 42;
+
+            // Envoyer la nouvelle valeur à la Raspberry Pi
+            ipc.of['raspberry-pi'].emit('message', nouvelleValeur);
+        });
     </script>
-
-    <h1>Test changement de variable</h1>
-
-    <!-- Boutons pour changer la variable -->
-    <button onclick="changerVariable(1)">Changer à 1</button>
-    <button onclick="changerVariable(2)">Changer à 2</button>
-    <button onclick="changerVariable(3)">Changer à 3</button>
-
-    <!-- Affichage de la variable -->
-    <p id="affichageVariable">Ma variable : 0</p>
-
 </body>
 </html>
